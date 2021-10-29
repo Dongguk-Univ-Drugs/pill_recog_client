@@ -14,13 +14,15 @@ class SearchMainScreen extends StatelessWidget {
         /// you can use sort of colors defined in `CColor` - @seunghwanly
         backgroundColor: CColor.primary.color,
       ),
-      body: Center(
-        child: ListView.separated(
-            itemBuilder: (context, index) => ListTile(
-                  title: Text(searchItems[index]),
-                ),
-            separatorBuilder: (context, index) => blankBox(height: 10),
-            itemCount: 3),
+      body: SafeArea(
+        child: Center(
+          child: ListView.separated(
+              itemBuilder: (context, index) => ListTile(
+                    title: Text(searchItems[index]),
+                  ),
+              separatorBuilder: (context, index) => blankBox(height: 10),
+              itemCount: 3),
+        ),
       ),
     );
   }
