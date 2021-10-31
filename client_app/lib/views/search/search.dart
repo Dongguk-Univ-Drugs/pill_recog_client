@@ -1,7 +1,7 @@
-import 'package:client_app/views/search/text_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import './text/text_search.dart';
 import '../../components/components.dart';
 
 class SearchMainScreen extends StatelessWidget {
