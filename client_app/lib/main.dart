@@ -15,15 +15,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          /// these button calls the recognizing screen
+          onPressed: () => Get.to(() => SearchMainScreen()),
+          child: const Icon(Icons.search),
+          backgroundColor: CColor.primary.color,
+        ),
         appBar: AppBar(
           title: const Text('💊'),
-          actions: [
-            /// these button calls the recognizing screen
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () => Get.to(() => SearchMainScreen()),
-            ),
-          ],
         ),
         body: SafeArea(
           child: Padding(
@@ -36,7 +35,10 @@ class App extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       highlightedText(text: '종하님,'),
-                      Text(' 어서와요 😆', style: CTypography.headline.style,)
+                      Text(
+                        ' 어서와요 😆',
+                        style: CTypography.headline.style,
+                      )
                     ],
                   ),
                 )
