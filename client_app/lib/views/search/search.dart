@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import './text/text_search.dart';
+import '../result/top_result.dart';
 import '../../components/components.dart';
 
 class SearchMainScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class SearchMainScreen extends StatelessWidget {
         child: Center(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    onTap: () => Get.to(() => const TextSearchScreen()),
+                    onTap: () => Get.to(() =>  TopResultScreen()),
                     title: Text(searchItems[index]),
                   ),
               separatorBuilder: (context, index) => blankBox(height: 10),
