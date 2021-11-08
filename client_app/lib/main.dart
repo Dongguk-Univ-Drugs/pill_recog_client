@@ -32,12 +32,6 @@ class App extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            /// these button calls the recognizing screen
-            onPressed: () => Get.to(() => SearchMainScreen()),
-            child: const Icon(Icons.search),
-            backgroundColor: CColor.primary.color,
-          ),
           appBar: AppBar(
             title: Text('이건뭐약 💊', style: CTypography.appbarTitle.style),
             backgroundColor: CColor.primary.color,
