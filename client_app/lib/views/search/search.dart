@@ -1,3 +1,4 @@
+import 'package:client_app/views/search/camera/camera_serach.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,12 @@ class SearchMainScreen extends StatelessWidget {
         child: Center(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    onTap: () => Get.to(() => TopResultScreen()),
+
+                    onTap: () => Get.to(() => index == 0
+                        ? const TextSearchScreen()
+                        : index == 1
+                            ? CameraSearchScreen()
+                            : CameraSearchScreen()),
                     title: Text(searchItems[index]),
                   ),
               separatorBuilder: (context, index) => blankBox(height: 10),
