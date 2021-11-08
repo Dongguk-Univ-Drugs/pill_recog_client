@@ -1,3 +1,4 @@
+import 'package:client_app/views/result/top_result.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,7 +45,7 @@ class _TextSearchScreenState extends State<TextSearchScreen> {
           slivers: [
             SliverAppBar(
               backgroundColor: CColor.primary.color,
-              title: const Text('Text Search'),
+              title: Text('Text Search', style: CTypography.appbarTitle.style),
             ),
             SliverPadding(
               padding: padding(horizontal: 8.0, vertical: 16.0),
@@ -113,7 +114,7 @@ class _TextSearchScreenState extends State<TextSearchScreen> {
                             ],
                           )),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => TopResultScreen()),
                     child: const Text('검색하기'),
                   ),
                 ],

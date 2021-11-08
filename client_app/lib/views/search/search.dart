@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import './text/text_search.dart';
+import '../result/top_result.dart';
 import '../../components/components.dart';
 
 class SearchMainScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class SearchMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: Text('Search', style: CTypography.appbarTitle.style),
 
         /// you can use sort of colors defined in `CColor` - @seunghwanly
         backgroundColor: CColor.primary.color,
@@ -23,6 +24,7 @@ class SearchMainScreen extends StatelessWidget {
         child: Center(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
+
                     onTap: () => Get.to(() => index == 0
                         ? const TextSearchScreen()
                         : index == 1
