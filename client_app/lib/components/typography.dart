@@ -1,7 +1,7 @@
 import 'package:client_app/components/colors.dart';
 import 'package:flutter/material.dart';
 
-enum CTypography { largeTitle, title, headline, body, footnote, caption }
+enum CTypography { largeTitle, appbarTitle, title, headline, body, footnote, caption }
 
 extension TypographyExtension on CTypography {
   TextStyle get style {
@@ -9,6 +9,9 @@ extension TypographyExtension on CTypography {
       case CTypography.largeTitle:
         return TextStyle(
             fontWeight: FontWeight.bold, color: CColor.largeTitle.color);
+      case CTypography.appbarTitle:
+        return TextStyle(
+            fontWeight: FontWeight.bold, color: CColor.white.color);
       case CTypography.title:
         return TextStyle(
             fontWeight: FontWeight.w700, color: CColor.title.color);

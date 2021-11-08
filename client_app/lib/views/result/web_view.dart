@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:client_app/components/colors.dart';
+import 'package:client_app/components/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,7 +78,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text(widget.name),
+            title: Text(widget.name, style: CTypography.appbarTitle.style),
             backgroundColor: CColor.primary.color,
             leading: BackButton(
               onPressed: () {

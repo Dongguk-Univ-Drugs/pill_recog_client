@@ -44,7 +44,7 @@ class _TextSearchScreenState extends State<TextSearchScreen> {
           slivers: [
             SliverAppBar(
               backgroundColor: CColor.primary.color,
-              title: const Text('Text Search'),
+              title: Text('Text Search', style: CTypography.appbarTitle.style),
             ),
             SliverPadding(
               padding: padding(horizontal: 8.0, vertical: 16.0),

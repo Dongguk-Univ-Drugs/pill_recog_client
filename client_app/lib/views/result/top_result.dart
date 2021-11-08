@@ -31,7 +31,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("검색 결과"),
+          title: Text("검색 결과", style: CTypography.appbarTitle.style),
           backgroundColor: CColor.primary.color,
         ),
         body: Center(
@@ -47,12 +47,12 @@ class _TopResultScreenState extends State<TopResultScreen> {
           child: Column(children: <Widget>[
             Expanded(
                 flex: 1,
-                child: Text("입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
+                child: Text(
+                    "입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: CColor.largeTitle.color,
                         fontSize: 15))),
-            
           ]),
         ));
   }

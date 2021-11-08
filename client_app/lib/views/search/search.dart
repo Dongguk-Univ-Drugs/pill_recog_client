@@ -14,7 +14,7 @@ class SearchMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: Text('Search', style: CTypography.appbarTitle.style),
 
         /// you can use sort of colors defined in `CColor` - @seunghwanly
         backgroundColor: CColor.primary.color,
@@ -23,7 +23,7 @@ class SearchMainScreen extends StatelessWidget {
         child: Center(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    onTap: () => Get.to(() =>  TopResultScreen()),
+                    onTap: () => Get.to(() => TopResultScreen()),
                     title: Text(searchItems[index]),
                   ),
               separatorBuilder: (context, index) => blankBox(height: 10),
