@@ -45,7 +45,12 @@ class _TopResultScreenState extends State<TopResultScreen> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,
           child: Column(children: <Widget>[
-            Expanded(flex: 1, child: Text("TOP 5", style: CTypography.headline.style,)),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  "TOP 5",
+                  style: CTypography.headline.style,
+                )),
             Expanded(
                 flex: 2,
                 child: Row(
@@ -54,8 +59,8 @@ class _TopResultScreenState extends State<TopResultScreen> {
                     Expanded(flex: 3, child: Image.network(_pill.imagePath)),
                     const Expanded(
                         flex: 2,
-                        child:
-                            Text("입력하신 사진을 바탕으로 검색한 결과입니다.\n\n클릭하면 웹사이트로 넘어갑니다.")),
+                        child: Text(
+                            "입력하신 사진을 바탕으로 검색한 결과입니다.\n\n클릭하면 웹사이트로 넘어갑니다.")),
                   ],
                 ))
           ]),
@@ -63,7 +68,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
   }
 
   Widget pageViewWidget() {
-    return Center(
+    return Container(
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.6,
         child: PageView.builder(
@@ -96,24 +101,30 @@ class _TopResultScreenState extends State<TopResultScreen> {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(_pill.imagePath),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.circular(20)),
       child: Column(
         children: <Widget>[
-          Expanded(flex: 9, child: Image.network(_pill.imagePath)),
+          Expanded(flex: 5, child: SizedBox()),
           Expanded(
               flex: 1,
-              child: Text(_pill.name,
-                  style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87))),
-          Expanded(
-              flex: 1,
-              child: Text(_pill.content.desc,
-                  style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87))),
+              child: SizedBox(
+                  child: Container(
+                    
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
+                          color: Colors.white),
+                      child: Center(
+                          child: Text(
+                        "${_pill.name}\n${_pill.content.desc}",
+                         style: CTypography.headline.style,
+                      ))))),
         ],
       ),
     );
