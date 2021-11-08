@@ -43,26 +43,16 @@ class _TopResultScreenState extends State<TopResultScreen> {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.05,
           child: Column(children: <Widget>[
             Expanded(
                 flex: 1,
-                child: Text(
-                  "TOP 5",
-                  style: CTypography.headline.style,
-                )),
-            Expanded(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(flex: 3, child: Image.network(_pill.imagePath)),
-                    const Expanded(
-                        flex: 2,
-                        child: Text(
-                            "입력하신 사진을 바탕으로 검색한 결과입니다.\n\n클릭하면 웹사이트로 넘어갑니다.")),
-                  ],
-                ))
+                child: Text("입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: CColor.largeTitle.color,
+                        fontSize: 15))),
+            
           ]),
         ));
   }
@@ -70,7 +60,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
   Widget pageViewWidget() {
     return Container(
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.6,
+        height: MediaQuery.of(context).size.height * 0.7,
         child: PageView.builder(
           itemCount: 5,
           controller: PageController(viewportFraction: 0.8),
@@ -114,7 +104,6 @@ class _TopResultScreenState extends State<TopResultScreen> {
               flex: 1,
               child: SizedBox(
                   child: Container(
-                    
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
@@ -123,7 +112,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
                       child: Center(
                           child: Text(
                         "${_pill.name}\n${_pill.content.desc}",
-                         style: CTypography.headline.style,
+                        style: CTypography.headline.style,
                       ))))),
         ],
       ),
