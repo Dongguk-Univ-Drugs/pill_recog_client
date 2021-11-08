@@ -20,15 +20,20 @@ class _TopResultScreenState extends State<TopResultScreen> {
   int _index = 0;
   final Pill _pill = Pill(
       id: "1",
-      name: "pill_1",
+      name: "액시드캡슐150밀리그람",
       imagePath:
           "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/1NOwp2F6NmP",
+      url:
+          "https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=200300408",
       content: Content(desc: "약 1번이에요", components: ["모양: 동그라미", "색상: 흰색"]));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Text("검색 결과"),
+          backgroundColor: CColor.primary.color,
+        ),
         body: Center(
           child: Column(children: <Widget>[discription(), pageViewWidget()]),
         ));
@@ -39,11 +44,21 @@ class _TopResultScreenState extends State<TopResultScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,
-          child: Column(
-            children: <Widget>[
-              Expanded(flex: 9, child: Text("TOP 5")),
-            ],
-          ),
+          child: Column(children: <Widget>[
+            Expanded(flex: 1, child: Text("TOP 5", style: CTypography.headline.style,)),
+            Expanded(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(flex: 3, child: Image.network(_pill.imagePath)),
+                    const Expanded(
+                        flex: 2,
+                        child:
+                            Text("입력하신 사진을 바탕으로 검색한 결과입니다.\n\n클릭하면 웹사이트로 넘어갑니다.")),
+                  ],
+                ))
+          ]),
         ));
   }
 
@@ -59,12 +74,10 @@ class _TopResultScreenState extends State<TopResultScreen> {
             return Transform.scale(
                 scale: i == _index ? 1 : 0.9,
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TextSearchScreen()),
-                    );
-                  },
+                  onTap: () => Get.to(() => WebViewScreen(
+                        name: _pill.name,
+                        url: _pill.url,
+                      )),
                   child: Card(
                       elevation: 6,
                       shape: RoundedRectangleBorder(

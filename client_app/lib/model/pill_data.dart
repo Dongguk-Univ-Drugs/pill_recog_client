@@ -4,12 +4,14 @@ class Pill {
   String id;
   String name;
   String imagePath;
+  String url;
   Content content;
 
   Pill(
       {required this.id,
       required this.name,
       required this.imagePath,
+      required this.url,
       required this.content});
 
   factory Pill.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Pill {
         id: json['_id'],
         name: json['name'],
         imagePath: json['imagePath'],
+        url: json['url'],
         content: Content.fromJson(json['content']));
   }
 }
