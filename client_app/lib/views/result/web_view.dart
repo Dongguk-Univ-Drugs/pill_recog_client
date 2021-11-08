@@ -8,6 +8,8 @@ import 'package:client_app/components/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,10 +50,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
   String url = "";
   double progress = 0;
   final urlController = TextEditingController();
-
+  bool isBookmarked = false;
   @override
   void initState() {
     super.initState();
+
+    _getBookmark(widget.name);
 
     pullToRefreshController = PullToRefreshController(
       options: PullToRefreshOptions(
@@ -78,14 +82,50 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text(widget.name, style: CTypography.appbarTitle.style),
-            backgroundColor: CColor.primary.color,
-            leading: BackButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
+              title: Text(widget.name, style: CTypography.appbarTitle.style),
+              backgroundColor: CColor.primary.color,
+              leading: BackButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (isBookmarked) {
+                          _removeBookmark(widget.name);
+                          setState(() {
+                            isBookmarked = false;
+                          });
+                          Fluttertoast.showToast(
+                              msg: "북마크를 삭제했습니다.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: CColor.body.color,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          _addBookmark(widget.name);
+                          setState(() {
+                            isBookmarked = true;
+                          });
+                          Fluttertoast.showToast(
+                              msg: "북마크를 추가했습니다.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: CColor.body.color,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
+                      },
+                      child: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        size: 26.0,
+                      ),
+                    )),
+              ]),
           body: SafeArea(
               child: Column(children: <Widget>[
             Expanded(
@@ -173,5 +213,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
             ),
           ]))),
     );
+  }
+
+  Future<bool> _getBookmark(pillname) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isBookmarked = prefs.getBool(widget.name) ?? false;
+    return isBookmarked;
+  }
+
+  _addBookmark(pillname) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(pillname, true);
+  }
+
+  _removeBookmark(pillname) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(pillname);
   }
 }
