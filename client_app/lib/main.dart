@@ -1,6 +1,6 @@
 import 'package:client_app/components/components.dart';
 import 'package:client_app/views/bookmark/bookmark.dart';
-import 'package:client_app/views/search/camera/camera_serach.dart';
+import 'package:client_app/views/search/camera/camera_cropping.dart';
 import 'package:client_app/views/search/text/text_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +47,7 @@ class App extends StatelessWidget {
                     childAspectRatio: 0.6,
                     children: <Widget>[
                       GestureDetector(
-                          onTap: () => Get.to(() => const CameraSearchScreen()),
+                          onTap: () => Get.to(() => CroppingImage()),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),

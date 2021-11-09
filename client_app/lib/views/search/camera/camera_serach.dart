@@ -5,6 +5,10 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'camera_screen.dart';
 
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+
 class CameraSearchScreen extends StatefulWidget {
   const CameraSearchScreen({Key? key}) : super(key: key);
 
@@ -67,6 +71,7 @@ class _CameraSearchScreenState extends State<CameraSearchScreen> {
                   TextButton(
                     onPressed: () async {
                       await initCamera();
+                      // Get.to(MyApp());
                       Get.to(CameraScreen(cameras: cameras));
                     },
                     child: const Text('촬영하기'),

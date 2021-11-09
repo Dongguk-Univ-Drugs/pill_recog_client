@@ -32,7 +32,7 @@ class _CameraScreenState extends State<CameraScreen> {
       // Get a specific camera from the list of available cameras.
       widget.cameras[cameraIndex],
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.max,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -81,7 +81,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     if (widget.cameras.length > 1) {
                       setState(() {
                         selectedCamera = selectedCamera == 0 ? 1 : 0;
-                        initializeCamera(selectedCamera);
+                        // initializeCamera(selectedCamera);
                       });
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -96,6 +96,8 @@ class _CameraScreenState extends State<CameraScreen> {
                   onTap: () async {
                     await _initializeControllerFuture;
                     var xFile = await _controller.takePicture();
+
+                    // TODO : Resizing Image
                     setState(() {
                       capturedImages.add(File(xFile.path));
                     });
