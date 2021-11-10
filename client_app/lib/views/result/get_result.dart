@@ -1,49 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:client_app/components/colors.dart';
 import 'package:client_app/components/typography.dart';
+import 'package:client_app/model/pill_data.dart';
 import 'package:client_app/views/result/web_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-
-Future<List<Pill>> fetchPills(http.Client client) async {
-  final response = await client.get(Uri.parse('http://192.168.0.33:3306/'));
-
-  // Use the compute function to run parsePills in a separate isolate.
-  return compute(parsePills, response.body);
-}
-
-// A function that converts a response body into a List<Pill>.
-List<Pill> parsePills(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Pill>((json) => Pill.fromJson(json)).toList();
-}
-
-class Pill {
-  String name;
-  String manufacturer;
-  String imageURL;
-  String webviewURL;
-
-  Pill(
-      {required this.name,
-      required this.manufacturer,
-      required this.imageURL,
-      required this.webviewURL});
-
-  factory Pill.fromJson(Map<String, dynamic> json) {
-    return Pill(
-      name: json['name'] as String,
-      manufacturer: json['manufacturer'] as String,
-      imageURL: json['imageURL'] as String,
-      webviewURL: json['webviewURL'] as String,
-    );
-  }
-}
 
 class PillsListScreen extends StatefulWidget {
   const PillsListScreen({Key? key, required this.Pills}) : super(key: key);
@@ -58,6 +19,7 @@ class _PillsListScreenState extends State<PillsListScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        discription(),
         Expanded(
             flex: 10,
             child: PageView.builder(
@@ -86,6 +48,24 @@ class _PillsListScreenState extends State<PillsListScreen> {
         )
       ],
     );
+  }
+
+  Widget discription() {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Column(children: <Widget>[
+            Expanded(
+                flex: 1,
+                child: Text(
+                    "입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: CColor.largeTitle.color,
+                        fontSize: 15))),
+          ]),
+        ));
   }
 
   Widget pillResult(_pill) {
