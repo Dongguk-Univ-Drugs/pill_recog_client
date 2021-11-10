@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import '../../../components/components.dart';
 import '../../result/get_result.dart';
+import '../../../model/pill_data.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CroppingImage extends StatelessWidget {
@@ -351,7 +353,7 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
       // Response 결과처리
       if (onValue.statusCode == 200) {
         print('Success pill Test');
-        List<Pill> resultPills = parsePills(jsonBody);
+        List<Pill> resultPills = Result.fromJson(json.decode(jsonBody)).result;
         Get.to(PillsListScreen(Pills: resultPills));
         // Navigator.pop(context);
       } else {
