@@ -45,10 +45,6 @@ dependencies:
   image: ^3.0.8
   image_picker: ^0.8.4+4
   image_cropper: ^1.4.1
-
-  image: ^3.0.8
-  image_picker: ^0.8.4+4
-  image_cropper: ^1.4.1
   http: ^0.13.4
 
 
