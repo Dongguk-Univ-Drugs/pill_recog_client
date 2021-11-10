@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import '../../../components/components.dart';
+import '../../result/get_result.dart';
 import 'package:http/http.dart' as http;
 
 class CroppingImage extends StatelessWidget {
@@ -13,7 +14,7 @@ class CroppingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('이건뭐약 💊', style: CTypography.appbarTitle.style),
+          title: Text('이미지로 검색', style: CTypography.appbarTitle.style),
           backgroundColor: CColor.primary.color,
         ),
         body: SafeArea(
@@ -341,7 +342,7 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
     print('Start Sending');
     //request 전송
     request.send().then((onValue) async {
-      final jsonBody = await onValue.stream.bytesToString();
+      final String jsonBody = await onValue.stream.bytesToString();
 
       print('status : ' + onValue.statusCode.toString());
       print('result : ' + jsonBody);
@@ -350,6 +351,8 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
       // Response 결과처리
       if (onValue.statusCode == 200) {
         print('Success pill Test');
+        List<Pill> resultPills = parsePills(jsonBody);
+        Get.to(PillsListScreen(Pills: resultPills));
         // Navigator.pop(context);
       } else {
         print('Fail pill Test');
