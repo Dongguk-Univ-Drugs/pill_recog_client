@@ -11,11 +11,16 @@ class BookmarkScreen extends StatefulWidget {
 }
 
 class _BookmarkScreenState extends State<BookmarkScreen> {
-  late List<String> pillList;
+  List<String> pillList = [];
+
   @override
   void initState() {
     super.initState();
-    _getPillList();
+    _getPillList().then((value) {
+      setState(() {
+        pillList = value;
+      });
+    });
   }
 
   @override
@@ -39,8 +44,8 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         ));
   }
 
-  void _getPillList() async {
+  Future<List<String>> _getPillList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    pillList = prefs.getKeys().toList();
+    return prefs.getKeys().toList();
   }
 }
