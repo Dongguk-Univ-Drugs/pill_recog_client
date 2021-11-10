@@ -40,7 +40,10 @@ class _TopResultScreenState extends State<TopResultScreen> {
           backgroundColor: CColor.primary.color,
         ),
         body: Center(
-          child: pageViewWidget(),
+          child: Column(children: <Widget>[
+            discription(),
+            Expanded(child: pageViewWidget())
+          ]),
         ));
   }
 
@@ -79,35 +82,5 @@ class _TopResultScreenState extends State<TopResultScreen> {
             );
           }
         });
-  }
-
-  Widget pillResult() {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(_pill.imageURL),
-            fit: BoxFit.cover,
-          ),
-          borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: <Widget>[
-          Expanded(flex: 5, child: SizedBox()),
-          Expanded(
-              flex: 1,
-              child: SizedBox(
-                  child: Container(
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                          color: Colors.white),
-                      child: Center(
-                          child: Text(
-                        "${_pill.name}\n${_pill.manufacturer}",
-                        style: CTypography.headline.style,
-                      ))))),
-        ],
-      ),
-    );
   }
 }
