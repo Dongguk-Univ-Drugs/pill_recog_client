@@ -66,8 +66,8 @@ class _TopResultScreenState extends State<TopResultScreen> {
   }
 
   Widget pageViewWidget() {
-    return FutureBuilder<List<Pill>>(
-        future: fetchPills(http.Client()),
+    return FutureBuilder<Result>(
+        future: fetchPill(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print(snapshot.error);
@@ -75,7 +75,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
               child: Text('An error has occurred!'),
             );
           } else if (snapshot.hasData) {
-            return PillsListScreen(Pills: snapshot.data!);
+            return PillsListScreen(Pills: snapshot.data!.result);
           } else {
             return const Center(
               child: CircularProgressIndicator(),

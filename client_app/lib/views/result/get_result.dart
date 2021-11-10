@@ -1,49 +1,9 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:client_app/components/colors.dart';
 import 'package:client_app/components/typography.dart';
+import 'package:client_app/model/pill_data.dart';
 import 'package:client_app/views/result/web_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-
-Future<List<Pill>> fetchPills(http.Client client) async {
-  final response = await client.get(Uri.parse('http://192.168.0.33:3306/'));
-
-  // Use the compute function to run parsePills in a separate isolate.
-  return compute(parsePills, response.body);
-}
-
-// A function that converts a response body into a List<Pill>.
-List<Pill> parsePills(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Pill>((json) => Pill.fromJson(json)).toList();
-}
-
-class Pill {
-  String name;
-  String manufacturer;
-  String imageURL;
-  String webviewURL;
-
-  Pill(
-      {required this.name,
-      required this.manufacturer,
-      required this.imageURL,
-      required this.webviewURL});
-
-  factory Pill.fromJson(Map<String, dynamic> json) {
-    return Pill(
-      name: json['name'] as String,
-      manufacturer: json['manufacturer'] as String,
-      imageURL: json['imageURL'] as String,
-      webviewURL: json['webviewURL'] as String,
-    );
-  }
-}
 
 class PillsListScreen extends StatefulWidget {
   const PillsListScreen({Key? key, required this.Pills}) : super(key: key);
