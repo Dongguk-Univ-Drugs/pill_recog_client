@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import '../../../components/components.dart';
+import 'package:http/http.dart' as http;
 
 class CroppingImage extends StatelessWidget {
   @override
@@ -60,7 +61,7 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
             _showActionSheet();
           else if (state == AppState.picked)
             _cropImage();
-          else if (state == AppState.cropped) _clearImage();
+          else if (state == AppState.cropped) _transportImage();
           // if (state == AppState.free)
           //   _pickImage();
           // else if (state == AppState.picked)
@@ -173,10 +174,40 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
     }
   }
 
-  void _clearImage() {
-    imageFile = null;
-    setState(() {
-      state = AppState.free;
+  void _transportImage() async {
+    var request = http.MultipartRequest(
+      "POST",
+      Uri.parse(
+        "http://192.168.0.32:8000/file/",
+      ),
+    );
+
+    // 이미지 파일 -> byte stream
+    var bytes = imageFile!.readAsBytesSync();
+    // 멀티파트 파일로 변환
+    var mpFile =
+        http.MultipartFile.fromBytes('file', bytes, filename: 'pillImage');
+    //Files 영역  // 필드명 'file'
+    print(bytes.length);
+    request.files.add(mpFile);
+    //Header 영역
+    request.headers["Content-Type"] = 'multipart/form-data';
+    print('Start Sending');
+    //request 전송
+    request.send().then((onValue) {
+      print('status : ' + onValue.statusCode.toString());
+      print(onValue.toString());
+      print(onValue.headers.toString());
+      print(onValue.contentLength.toString());
+
+      // Response 결과처리
+      if (onValue.statusCode == 200) {
+        print('Success pill Test');
+        // Navigator.pop(context);
+      } else {
+        print('Fail pill Test');
+        print(onValue.statusCode.toString());
+      }
     });
   }
 }
