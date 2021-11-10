@@ -38,6 +38,7 @@ enum AppState {
 class _CroppingImageScreenState extends State<CroppingImageScreen> {
   late AppState state;
   File? imageFile;
+  int loadingState = 0;
 
   @override
   void initState() {
@@ -48,29 +49,171 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   // title: Text(widget.title),
-      // ),
-      body: Center(
-        child: imageFile != null ? Image.file(imageFile!) : Container(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
-        onPressed: () {
-          if (state == AppState.free)
-            _showActionSheet();
-          else if (state == AppState.picked)
-            _cropImage();
-          else if (state == AppState.cropped) _transportImage();
-          // if (state == AppState.free)
-          //   _pickImage();
-          // else if (state == AppState.picked)
-          //   _cropImage();
-          // else if (state == AppState.cropped) _clearImage();
-        },
-        child: _buildButtonIcon(),
-      ),
-    );
+        // appBar: AppBar(
+        //   // title: Text(widget.title),
+        // ),
+        body: Container(
+      child: imageFile != null
+          ? Stack(children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width * 1.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.file(
+                          imageFile!,
+                          fit: BoxFit.contain,
+                          // width: MediaQuery.of(context).size.width * 0.7,
+                          height: MediaQuery.of(context).size.height * 0.55,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('\n알약 촬영 시 주의 사항',
+                            style: CTypography.headline.style),
+                        Text('1. 배경이 균일한 곳에서 촬영해주세요.',
+                            style: CTypography.body.style),
+                        Text('2. 알약을 위 이미지와 같이 중앙에 위치시켜주세요.',
+                            style: CTypography.body.style),
+                        Text('3. 자르기를 통해 알약만 남겨주세요.',
+                            style: CTypography.body.style),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            primary: Colors.deepOrange, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          child: state == AppState.free
+                              ? Text('이미지 촬영/선택',
+                                  style: CTypography.appbarTitle.style)
+                              : state == AppState.picked
+                                  ? Text('이미지 자르기',
+                                      style: CTypography.appbarTitle.style)
+                                  : Text('식별하기',
+                                      style: CTypography.appbarTitle.style),
+                          onPressed: () {
+                            if (state == AppState.free)
+                              _showActionSheet();
+                            else if (state == AppState.picked)
+                              _cropImage();
+                            else if (state == AppState.cropped)
+                              _transportImage();
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              state == AppState.cropped && loadingState == 1
+                  ? Center(
+                      child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Colors.deepOrange,
+                          strokeWidth: 10,
+                        ),
+                        Text('\n식별 중',
+                            style: TextStyle(
+                                color: Colors.deepOrange,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700))
+                      ],
+                    ))
+                  : SizedBox()
+            ])
+          : Container(
+              width: MediaQuery.of(context).size.width * 1.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('images/exampleImage.png'),
+                        fit: BoxFit.contain,
+
+                        // width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.height * 0.55,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('\n알약 촬영 시 주의 사항',
+                          style: CTypography.headline.style),
+                      Text('1. 배경이 균일한 곳에서 촬영해주세요.',
+                          style: CTypography.body.style),
+                      Text('2. 알약을 위 이미지와 같이 중앙에 위치시켜주세요.',
+                          style: CTypography.body.style),
+                      Text('3. 자르기를 통해 알약만 남겨주세요.',
+                          style: CTypography.body.style),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
+                          primary: Colors.deepOrange, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        child: state == AppState.free
+                            ? Text('이미지 촬영/선택',
+                                style: CTypography.appbarTitle.style)
+                            : state == AppState.picked
+                                ? Text('이미지 자르기',
+                                    style: CTypography.appbarTitle.style)
+                                : Text('식별하기',
+                                    style: CTypography.appbarTitle.style),
+                        onPressed: () {
+                          if (state == AppState.free)
+                            _showActionSheet();
+                          else if (state == AppState.picked)
+                            _cropImage();
+                          else if (state == AppState.cropped) _transportImage();
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+    )
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: Colors.deepOrange,
+        //   onPressed: () {
+        //     if (state == AppState.free)
+        //       _showActionSheet();
+        //     else if (state == AppState.picked)
+        //       _cropImage();
+        //     else if (state == AppState.cropped) _transportImage();
+        //     // if (state == AppState.free)
+        //     //   _pickImage();
+        //     // else if (state == AppState.picked)
+        //     //   _cropImage();
+        //     // else if (state == AppState.cropped) _clearImage();
+        //   },
+        // child: _buildButtonIcon(),
+        // ),
+        );
   }
 
   void _showActionSheet() {
@@ -175,6 +318,9 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
   }
 
   void _transportImage() async {
+    setState(() {
+      loadingState = 1;
+    });
     var request = http.MultipartRequest(
       "POST",
       Uri.parse(
@@ -208,6 +354,9 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
       } else {
         print('Fail pill Test');
         print(onValue.statusCode.toString());
+        setState(() {
+          loadingState = 0;
+        });
       }
     });
   }
