@@ -194,11 +194,12 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
     request.headers["Content-Type"] = 'multipart/form-data';
     print('Start Sending');
     //request 전송
-    request.send().then((onValue) {
+    request.send().then((onValue) async {
+      final jsonBody = await onValue.stream.bytesToString();
+
       print('status : ' + onValue.statusCode.toString());
-      print(onValue.toString());
+      print('result : ' + jsonBody);
       print(onValue.headers.toString());
-      print(onValue.contentLength.toString());
 
       // Response 결과처리
       if (onValue.statusCode == 200) {
