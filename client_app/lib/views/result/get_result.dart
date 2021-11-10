@@ -1,3 +1,4 @@
+import 'package:client_app/components/colors.dart';
 import 'package:client_app/components/typography.dart';
 import 'package:client_app/model/pill_data.dart';
 import 'package:client_app/views/result/web_view.dart';
@@ -18,6 +19,7 @@ class _PillsListScreenState extends State<PillsListScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        discription(),
         Expanded(
             flex: 10,
             child: PageView.builder(
@@ -46,6 +48,24 @@ class _PillsListScreenState extends State<PillsListScreen> {
         )
       ],
     );
+  }
+
+  Widget discription() {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: Column(children: <Widget>[
+            Expanded(
+                flex: 1,
+                child: Text(
+                    "입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: CColor.largeTitle.color,
+                        fontSize: 15))),
+          ]),
+        ));
   }
 
   Widget pillResult(_pill) {

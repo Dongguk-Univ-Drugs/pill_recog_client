@@ -40,28 +40,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
           backgroundColor: CColor.primary.color,
         ),
         body: Center(
-          child: Column(children: <Widget>[
-            discription(),
-            Expanded(child: pageViewWidget())
-          ]),
-        ));
-  }
-
-  Widget discription() {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-          child: Column(children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Text(
-                    "입력하신 사진을 바탕으로 검색한 결과입니다. 하단의 카드를 클릭하면 웹사이트로 넘어갑니다.",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: CColor.largeTitle.color,
-                        fontSize: 15))),
-          ]),
+          child: Column(children: <Widget>[Expanded(child: pageViewWidget())]),
         ));
   }
 
@@ -75,6 +54,9 @@ class _TopResultScreenState extends State<TopResultScreen> {
               child: Text('An error has occurred!'),
             );
           } else if (snapshot.hasData) {
+            if (snapshot.data!.result.isEmpty) {
+              return emptyResult();
+            }
             return PillsListScreen(Pills: snapshot.data!.result);
           } else {
             return const Center(
@@ -82,5 +64,14 @@ class _TopResultScreenState extends State<TopResultScreen> {
             );
           }
         });
+  }
+
+  Widget emptyResult() {
+    return Center(
+        child: Text("검색된 알약이 없습니다.",
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: CColor.largeTitle.color,
+                fontSize: 20)));
   }
 }
