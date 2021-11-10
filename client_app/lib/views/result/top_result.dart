@@ -1,5 +1,5 @@
 import 'package:client_app/model/pill_data.dart';
-import 'package:client_app/views/result/example.dart';
+import 'package:client_app/views/result/get_result.dart';
 import 'package:client_app/views/result/web_view.dart';
 import 'package:client_app/views/search/text/text_search.dart';
 import 'package:client_app/views/search/text/text_search_controller.dart';
@@ -40,7 +40,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
           backgroundColor: CColor.primary.color,
         ),
         body: Center(
-          child: examplewidget(),
+          child: pageViewWidget(),
         ));
   }
 
@@ -62,7 +62,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
         ));
   }
 
-  Widget examplewidget() {
+  Widget pageViewWidget() {
     return FutureBuilder<List<Pill>>(
         future: fetchPills(http.Client()),
         builder: (context, snapshot) {
@@ -81,39 +81,7 @@ class _TopResultScreenState extends State<TopResultScreen> {
         });
   }
 
-  Widget pageViewWidget() {
-    return Container(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: PageView.builder(
-          itemCount: 5,
-          controller: PageController(viewportFraction: 0.8),
-          onPageChanged: (int index) => setState(() => _index = index),
-          itemBuilder: (_, i) {
-            return Transform.scale(
-                scale: i == _index ? 1 : 0.9,
-                child: GestureDetector(
-                  onTap: () => Get.to(() => WebViewScreen(
-                        name: _pill.name,
-                        url: _pill.imageURL,
-                      )),
-                  child: Card(
-                      elevation: 6,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: pillResult()),
-                ));
-          },
-        ),
-      ),
-    );
-  }
-
   Widget pillResult() {
-    void _selectItem({value}) {
-      print(value ?? "null");
-    }
-
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
