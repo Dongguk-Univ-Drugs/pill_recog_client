@@ -32,7 +32,7 @@ class _PillsListScreenState extends State<PillsListScreen> {
                     child: GestureDetector(
                       onTap: () => Get.to(() => WebViewScreen(
                             name: widget.Pills[i].name,
-                            url: widget.Pills[i].imageURL,
+                            url: widget.Pills[i].webviewURL,
                           )),
                       child: Card(
                           elevation: 6,
@@ -72,8 +72,11 @@ class _PillsListScreenState extends State<PillsListScreen> {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(_pill.imageURL),
-            fit: BoxFit.cover,
+            image: NetworkImage(
+              _pill.imageURL,
+            ),
+            alignment: const FractionalOffset(0.2, 0),
+            fit: BoxFit.fitHeight,
           ),
           borderRadius: BorderRadius.circular(20)),
       child: Column(
