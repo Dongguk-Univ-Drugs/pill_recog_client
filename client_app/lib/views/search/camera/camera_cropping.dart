@@ -8,6 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import '../../../components/components.dart';
 import '../../result/get_result.dart';
 import '../../../model/pill_data.dart';
+import 'camera_result.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -327,7 +328,7 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
     var request = http.MultipartRequest(
       "POST",
       Uri.parse(
-        "http://192.168.0.32:8000/file/",
+        "http://192.168.0.9:8000/file/",
       ),
     );
 
@@ -347,14 +348,14 @@ class _CroppingImageScreenState extends State<CroppingImageScreen> {
       final String jsonBody = await onValue.stream.bytesToString();
 
       print('status : ' + onValue.statusCode.toString());
-      print('result : ' + jsonBody);
+      print(jsonBody);
       print(onValue.headers.toString());
 
       // Response 결과처리
       if (onValue.statusCode == 200) {
         print('Success pill Test');
         List<Pill> resultPills = Result.fromJson(json.decode(jsonBody)).result;
-        Get.to(PillsListScreen(Pills: resultPills));
+        Get.to(CameraResultScreen(resultPills: resultPills));
         // Navigator.pop(context);
       } else {
         print('Fail pill Test');
