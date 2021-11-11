@@ -32,7 +32,7 @@ class _PillsListScreenState extends State<PillsListScreen> {
                     child: GestureDetector(
                       onTap: () => Get.to(() => WebViewScreen(
                             name: widget.Pills[i].name,
-                            url: widget.Pills[i].imageURL,
+                            url: widget.Pills[i].webviewURL,
                           )),
                       child: Card(
                           elevation: 6,
