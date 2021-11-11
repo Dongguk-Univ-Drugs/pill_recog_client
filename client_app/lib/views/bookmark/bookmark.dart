@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../components/components.dart';
 
 class BookmarkScreen extends StatefulWidget {
@@ -30,18 +30,27 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
           title: Text("북마크", style: CTypography.appbarTitle.style),
           backgroundColor: CColor.primary.color,
         ),
-        body: ListView.separated(
-          padding: const EdgeInsets.all(8),
+        body: AnimationLimiter(
+            child: ListView.separated(
+          padding: const EdgeInsets.all(32),
           itemCount: pillList.length,
           itemBuilder: (BuildContext context, int index) {
             return SizedBox(
-              height: 50,
-              child: Center(child: Text(pillList[index])),
-            );
+                height: 50,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (index + 1).toString() + '.  ' + pillList[index],
+                        style: CTypography.title.style,
+                      ),
+                    ]));
           },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ));
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            thickness: 3,
+          ),
+        )));
   }
 
   Future<List<String>> _getPillList() async {
